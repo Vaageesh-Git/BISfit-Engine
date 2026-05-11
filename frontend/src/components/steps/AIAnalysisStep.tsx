@@ -65,7 +65,8 @@ const dummyResults = [
         const queryParts = [state.category, ...Object.values(state.answers).flat()].filter(Boolean);
         const query = queryParts.join(" ");
         
-        const response = await axios.post('/query', { query });
+        const apiUrl = import.meta.env.VITE_API_URL || '';
+        const response = await axios.post(`${apiUrl}/query`, { query });
         
         // Ensure minimum time for animations to show
         setTimeout(() => {
