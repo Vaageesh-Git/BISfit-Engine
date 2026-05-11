@@ -10,15 +10,18 @@ logger = logging.getLogger(__name__)
 
 class LLMClient:
     def __init__(self):
-        # Collect all API keys that start with GROQ_API_KEY exclusively from the .env file
+        # Collect all API keys that start with GROQ_API_KEY from .env or OS environment
         self.api_keys = []
         env_vars = dotenv_values(".env")
-        for key, value in env_vars.items():
+        all_env = {**env_vars, **os.environ}
+        
+        for key, value in all_env.items():
             if key.startswith("GROQ_API_KEY") and value:
-                self.api_keys.append(value)
+                if value not in self.api_keys: # prevent duplicates
+                    self.api_keys.append(value)
                 
         if not self.api_keys:
-            logger.warning("No GROQ_API_KEY found in the .env file.")
+            logger.warning("No GROQ_API_KEY found in the environment variables.")
             
         self.current_key_idx = 0
         self.model = "llama-3.3-70b-versatile"

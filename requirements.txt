@@ -3,3 +3,6 @@ faiss-cpu==1.8.0
 groq>=1.2.0
 numpy==1.26.4
 python-dotenv>=1.0.1
+fastapi
+uvicorn
+pydantic
