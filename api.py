@@ -14,6 +14,13 @@ from pydantic import BaseModel
 from src.pipeline.rag import RAGPipeline
 import os
 
+# Set environment variables immediately to restrict PyTorch and system memory usage
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["MALLOC_ARENA_MAX"] = "2"
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "garbage_collection_threshold:0.6,max_split_size_mb:128"
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
